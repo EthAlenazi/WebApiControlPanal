@@ -1,7 +1,9 @@
+using ControllPanel.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +29,9 @@ namespace ControllPanel
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddDbContext<DatabaseContext>(opation =>
+            opation.UseSqlServer(Configuration.GetConnectionString("SqlConnaction"))
+            );
 
             //CORS= Cross Origin Resource Sharing 
             services.AddCors(o => {
@@ -41,6 +45,8 @@ namespace ControllPanel
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllPanel", Version = "v1" , Description= "This is for the purpose of learning" });
             });
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
