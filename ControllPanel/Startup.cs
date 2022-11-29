@@ -28,9 +28,18 @@ namespace ControllPanel
         {
 
             services.AddControllers();
+
+            //CORS= Cross Origin Resource Sharing 
+            services.AddCors(o => {
+                o.AddPolicy("corsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllPanel", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllPanel", Version = "v1" , Description= "This is for the purpose of learning" });
             });
         }
 
@@ -45,6 +54,9 @@ namespace ControllPanel
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ControllPanel v1"));
             app.UseHttpsRedirection();
+
+
+            app.UseCors("corsPolicy");//Allow Anyone to use our resource even when they not in same domain
 
             app.UseRouting();
 
