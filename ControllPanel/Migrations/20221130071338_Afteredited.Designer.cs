@@ -3,14 +3,16 @@ using ControllPanel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControllPanel.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221130071338_Afteredited")]
+    partial class Afteredited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +103,7 @@ namespace ControllPanel.Migrations
                             IsFemale = true,
                             LastName = "Saleh",
                             MobileNumber = 966535432221L,
-                            PersonalId = 1221376459L,
+                            PersonalId = 12L,
                             ProfilePhotopath = "C:\\Users\\Atheer Alonizi\\Pictures\\Photos\\User_3.PNG"
                         });
                 });

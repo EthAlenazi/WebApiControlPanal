@@ -9,12 +9,12 @@ namespace ControllPanel.Data
     public class Account
     {
         public int Id { get; set; }
-        public int PersonalId { get; set; }
+        public long PersonalId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int MobileNumber { get; set; }
-        public bool Gender { get; set; } //where  1 = Male|| 0 = Female
+        public long MobileNumber { get; set; }
+        public bool IsFemale { get; set; } //where  0 = Male|| 1 = Female
         public bool IsAdmin { get; set; }//where 0 = user || 1 = Admin
         public bool IsActive { get; set; }//where 0= Active || 1 = InActive 
         public string ProfilePhotopath { get; set; }
