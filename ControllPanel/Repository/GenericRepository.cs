@@ -12,7 +12,13 @@ namespace ControllPanel.Repository
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         //private because we don't need do any modification in this file
-        private readonly DatabaseContext _context; 
+        private readonly DatabaseContext _context;
+
+        #region
+       // Why do we use 2 objects here _context also _db?
+
+       //actually when we use _context object it must use one table but _db allow us to access all tables in our context
+        #endregion
         private readonly DbSet<T> _db;
 
         public GenericRepository(DatabaseContext context)
@@ -29,6 +35,7 @@ namespace ControllPanel.Repository
 
         public void DeleteRange(IEnumerable<T> entities)
         {
+          
             _db.RemoveRange(entities);
         }
 
