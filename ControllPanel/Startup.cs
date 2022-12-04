@@ -1,3 +1,5 @@
+using AutoMapper;
+using ControllPanel.Configurations;
 using ControllPanel.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +47,7 @@ namespace ControllPanel
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllPanel", Version = "v1" , Description= "This is for the purpose of learning" });
             });
+            services.AddAutoMapper(typeof(MapperInitilizer));
 
             services.AddControllers();
         }
