@@ -19,8 +19,8 @@ namespace ControllPanel.Model
         {
 
             public int Id { get; set; }
-        public virtual IList<AccountDTO> AccountDTO { get; set; }
+        public virtual IList<AccountDTO> Accounts { get; set; }
 
-    }
+    
     }
 }

@@ -22,7 +22,7 @@ namespace ControllPanel.Data
 
         [ForeignKey(nameof(Address))]
           public int AddressId { get; set; }   
-        public Address Address { get; set; }
+        public Address Addresses { get; set; }
 
 
 

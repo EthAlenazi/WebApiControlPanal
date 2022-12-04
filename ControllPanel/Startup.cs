@@ -1,6 +1,8 @@
 using AutoMapper;
 using ControllPanel.Configurations;
 using ControllPanel.Data;
+using ControllPanel.IRepository;
+using ControllPanel.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,9 +49,11 @@ namespace ControllPanel
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllPanel", Version = "v1" , Description= "This is for the purpose of learning" });
             });
-            services.AddAutoMapper(typeof(MapperInitilizer));
 
-            services.AddControllers();
+            services.AddAutoMapper(typeof(MapperInitilizer));
+            services.AddTransient<IUnitofWork, UnitofWork>();
+            services.AddControllers().AddNewtonsoftJson(op =>
+            op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +77,7 @@ namespace ControllPanel
 
             app.UseEndpoints(endpoints =>
             {
+             
                 endpoints.MapControllers();
             });
         }

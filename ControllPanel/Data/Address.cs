@@ -12,7 +12,7 @@ namespace ControllPanel.Data
         public string City { get; set; }
         public string Street { get; set; }
         public int ZipCode { get; set; }
-        public virtual IList<Account>  Account { get; set;  }
+        public virtual IList<Account> Accounts { get; set;  }
     }
 }
 

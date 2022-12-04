@@ -10,7 +10,7 @@ namespace ControllPanel.Model
     public class AccountDTO : CreateAccountDTO
     {
         public int Id { get; set; }
-      public AddressDTO Address { get; set;  }
+      public AddressDTO Addresses { get; set;  }
     }
 
     public class CreateAccountDTO
