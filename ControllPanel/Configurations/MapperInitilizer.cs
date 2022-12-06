@@ -17,6 +17,8 @@ namespace ControllPanel.Configurations
             CreateMap<Account, CreateAccountDTO>().ReverseMap();
             CreateMap<Address,AddressDTO>().ReverseMap();
             CreateMap<Address, CreateAddressDTO>().ReverseMap();
+            CreateMap<ApiUser, UserDTO>().ReverseMap();
+            CreateMap<ApiUser, LoginDTO>().ReverseMap();
         }
     }
 }

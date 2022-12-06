@@ -6,6 +6,7 @@ using ControllPanel.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,7 +37,9 @@ namespace ControllPanel
             services.AddDbContext<DatabaseContext>(opation =>
             opation.UseSqlServer(Configuration.GetConnectionString("SqlConnaction"))
             );
-
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            
             //CORS= Cross Origin Resource Sharing 
             services.AddCors(o => {
                 o.AddPolicy("corsPolicy",

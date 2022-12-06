@@ -35,6 +35,7 @@ namespace ControllPanel.Model
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }//Should be required and email format.
 
+        [DataType(DataType.PhoneNumber)]
         public long MobileNumber { get; set; }//Should be correct format with country code********
 
         [Required(ErrorMessage = "The Sex is required")]
@@ -42,9 +43,11 @@ namespace ControllPanel.Model
         public bool IsFemale { get; set; }//Should be required
         public bool IsAdmin { get; set; }
         public bool IsActive { get; set; }
+
+        [DataType(DataType.ImageUrl)]
         public string ProfilePhotopath { get; set; }
 
-        [Required(ErrorMessage = "yhe Adderss Id  is required")]
+        [Required(ErrorMessage = "The Adderss Id  is required")]
         public int AddressId { get; set; }
 
 
