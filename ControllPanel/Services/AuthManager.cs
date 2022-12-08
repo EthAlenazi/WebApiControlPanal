@@ -47,7 +47,7 @@ namespace ControllPanel.Services
         private JwtSecurityToken GenerateTokenOpations(SigningCredentials signingCredentials, List<Claim> claims)
         {
             var JWTSetting = _configuration.GetSection("Jwt");
-            var expiration = DateTime.Now.AddMinutes(Convert.ToDouble(JWTSetting.GetSection("Lifetime").Value));
+            var expiration = DateTime.UtcNow.AddMinutes(Convert.ToDouble(JWTSetting.GetSection("Lifetime").Value));
            
             var token = new JwtSecurityToken(
                 issuer: JWTSetting.GetSection("Issuer").Value,//Return Issuer Name 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ControllPanel.IRepository;
 using ControllPanel.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -48,6 +49,7 @@ namespace ControllPanel.Controllers
 
 
         [HttpGet("{id:int}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAddress(int id)
