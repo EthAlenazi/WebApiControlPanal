@@ -49,9 +49,10 @@ namespace ControllPanel
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+        
 
             services.AddAutoMapper(typeof(MapperInitilizer));
-            services.AddTransient<IUnitofWork, UnitofWork>();//
+            services.AddTransient<IUnitofWork, UnitofWork>();
             services.AddScoped<IAuthManager, AuthManager>();//What's the difference between them
             AddSwaggerDoc(services);
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using ControllPanel.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,6 +68,34 @@ namespace ControllPanel.Controllers
                 _logger.LogError(ex, $"Somthig want wrong in {nameof(GetAccount)} ");
                 return StatusCode(500, "Internal Server Error Please Try Again Later! ");
             }
+        }
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateAccount([FromBody] CreateAccountDTO createAccount)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError( $"Invailed POST attemp! {nameof(CreateAccount)}");
+                return StatusCode(500,"Internal Server Error, Please try agin later!");
+            }
+            try
+            {
+                var Account = _mapper.Map<Account>(createAccount);
+                await _Unitofwork.Account.Insert(Account);
+                await _Unitofwork.Save();
+
+                return Ok(Account);// CreatedAtRoute("GetAccount" ,new { id = Account.Id }, Account);
+
+            }
+            catch (Exception ex )
+            {
+
+                _logger.LogError(ex, $"Somtning Went Weong in the {nameof(CreateAccount)}");
+                return Problem($"Somtning Went Weong in the {nameof(CreateAccount)}", statusCode: 500);
+            }
+
         }
 
     }

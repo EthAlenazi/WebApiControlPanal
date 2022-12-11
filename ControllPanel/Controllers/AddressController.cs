@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ControllPanel.Data;
 using ControllPanel.IRepository;
 using ControllPanel.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -16,13 +17,14 @@ namespace ControllPanel.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private readonly IUnitofWork _uunitofwork;
+        private readonly IUnitofWork _Unitofwork;
         private readonly ILogger<AddressController> _logger;
         private readonly IMapper _Mapper;
+      
 
         public AddressController(IUnitofWork uunitofwork, ILogger<AddressController> logger, IMapper Mapper)
         {
-            _uunitofwork = uunitofwork;
+            _Unitofwork = uunitofwork;
             _logger = logger;
             _Mapper = Mapper;
         }
@@ -34,7 +36,7 @@ namespace ControllPanel.Controllers
 
             try
             {
-                var Addreses = await _uunitofwork.Address.GetAll();
+                var Addreses = await _Unitofwork.Address.GetAll();
                 var result = _Mapper.Map<IList<AddressDTO>>(Addreses);
                 return Ok(result);
 
@@ -57,7 +59,7 @@ namespace ControllPanel.Controllers
 
             try
             {
-                var Address = await _uunitofwork.Address.Get(q => q.Id ==id, new List<string> { "Accounts" });
+                var Address = await _Unitofwork.Address.Get(q => q.Id ==id, new List<string> { "Accounts" });
                 var result = _Mapper.Map<AddressDTO>(Address);
                 return Ok(result);
 
@@ -68,6 +70,36 @@ namespace ControllPanel.Controllers
                 return StatusCode(500, "Internal Server Error Please Try Again Lateer!");
 
             }
+        }
+
+        [HttpPost]
+       // [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Createddress([FromBody] CreateAddressDTO createAddress)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError($"Invailed POST attemp! {nameof(Createddress)}");
+                return StatusCode(500, "Internal Server Error, Please try agin later!");
+            }
+            try
+            {
+                var address = _Mapper.Map<Address>(createAddress);
+                await _Unitofwork.Address.Insert(address);
+                await _Unitofwork.Save();
+
+                return Ok(address); // CreatedAtRoute("GetAddress", new { id = address.Id }, address);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"Somtning Went Weong in the {nameof(Createddress)}");
+                return Problem($"Somtning Went Weong in the {nameof(Createddress)}", statusCode: 500);
+            }
+
         }
     }
 }

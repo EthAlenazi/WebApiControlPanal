@@ -17,17 +17,14 @@ namespace ControllPanel.Model
     {
 
         [Required(ErrorMessage = "The Personal Id is required")]
-        [MaxLength(11,ErrorMessage ="Phone number too long make suer 11 number")]
-        [MinLength(11, ErrorMessage = "Phone number too short make suer 11 number")]
         public long PersonalId { get; set; }//Should be required and it should be exactly 11 characters.
 
-        [Required(ErrorMessage = "The First Name is required")]
-        [StringLength(maximumLength: 59, ErrorMessage = " The First Name is too long")]
+       [Required(ErrorMessage = "The First Name is required")]
+       [StringLength(maximumLength: 5, ErrorMessage = " The First Name is too long")]
         public string FirstName { get; set; }//Should be required and less than 60 characters
 
 
         [Required(ErrorMessage = "The Last Name is required")]
-        [StringLength(maximumLength:59,ErrorMessage =" The Last Name is too long")]
         public string LastName { get; set; }//Should be required and less than 60 characters
 
 
@@ -35,16 +32,16 @@ namespace ControllPanel.Model
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }//Should be required and email format.
 
-        [DataType(DataType.PhoneNumber)]
+        //[DataType(DataType.PhoneNumber)]
         public long MobileNumber { get; set; }//Should be correct format with country code********
 
         [Required(ErrorMessage = "The Sex is required")]
-        [Display(Name = "Sex")]
+        //[Display(Name = "Sex")]
         public bool IsFemale { get; set; }//Should be required
         public bool IsAdmin { get; set; }
         public bool IsActive { get; set; }
 
-        [DataType(DataType.ImageUrl)]
+        //[DataType(DataType.ImageUrl)]
         public string ProfilePhotopath { get; set; }
 
         [Required(ErrorMessage = "The Adderss Id  is required")]
