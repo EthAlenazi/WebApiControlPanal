@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 namespace ControllPanel.Model
 {
 
+    public class UpdateAdressDTO : CreateAddressDTO { 
+    
+    }
 
         public class CreateAddressDTO
         {

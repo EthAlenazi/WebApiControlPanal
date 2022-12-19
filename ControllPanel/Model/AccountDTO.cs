@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace ControllPanel.Model
 {
+
+    public class UpdateAccountDTO: CreateAccountDTO
+    {
+
+    }
     public class AccountDTO : CreateAccountDTO
     {
         public int Id { get; set; }
@@ -49,6 +54,8 @@ namespace ControllPanel.Model
 
 
     }
+
+
 
 
 }

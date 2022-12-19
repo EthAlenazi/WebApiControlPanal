@@ -28,6 +28,42 @@ namespace ControllPanel.Controllers
             _logger = logger;
             _Mapper = Mapper;
         }
+
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Updateaddress(int id, [FromBody] UpdateAdressDTO addressDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError($"Invailed POST attemp! {nameof(Updateaddress)}");
+                return BadRequest("Internal Server Error, Please try agin later!");
+            }
+            try
+            {
+                var address = await _Unitofwork.Address.Get(q => q.Id == id);
+                if (address == null)
+                {
+                    _logger.LogError($"Invailed POST attemp! {nameof(Updateaddress)}");
+                    return BadRequest("Invalid Dtaa!");
+                }
+                _Mapper.Map(addressDTO, address);
+                _Unitofwork.Address.Update(address);
+                await _Unitofwork.Save();
+
+                return NoContent(); // CreatedAtRoute("GetAddress", new { id = address.Id }, address);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"Somtning Went Weong in the {nameof(Updateaddress)}");
+                return Problem($"Somtning Went Weong in the {nameof(Updateaddress)}", statusCode: 500);
+            }
+
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

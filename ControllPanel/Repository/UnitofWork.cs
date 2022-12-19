@@ -36,8 +36,8 @@ namespace ControllPanel.Repository
         //        make repeseniation for it in the
 
         #endregion
-        public IGenericRepository<Account> Account => _account ??= //if this objact is null 
-            new GenericRepository<Account>(_context);// return an objact type is Generic Repository 
+        public IGenericRepository<Account> Account => _account ??= new GenericRepository<Account>(_context);
+        //if this objact is null return an objact type is Generic Repository 
         //if the private property is empty then return a new instance of Generic Repository 
         public IGenericRepository<Address> Address => _address ??= new GenericRepository<Address>(_context);
 

@@ -29,8 +29,46 @@ namespace ControllPanel.Controllers
                 
         }
 
+        [HttpPut("{id:int}")]
+       //[Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateAccount(int id, [FromBody] UpdateAccountDTO accountDTO)
+        {
+            if (!ModelState.IsValid || id <1)
+            {
+                _logger.LogError($"Invailed POST attemp! {nameof(CreateAccount)}");
+                return BadRequest("Internal Server Error, Please try agin later!");
+            }
+            try
+            {
+                var account = await _Unitofwork.Account.Get(q => q.Id == id);
+                if (account == null) {
+                    _logger.LogError($"Invailed POST attemp! {nameof(CreateAccount)}");
+                    return BadRequest("Data inserted invalid!");
+
+                }
+                _mapper.Map(accountDTO, account);
+                _Unitofwork.Account.Update(account);
+                await _Unitofwork.Save();
+
+                return NoContent();// CreatedAtRoute("GetAccount" ,new { id = Account.Id }, Account);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"Somtning Went Weong in the {nameof(CreateAccount)}");
+                return Problem($"Somtning Went Weong in the {nameof(CreateAccount)}", statusCode: 500);
+            }
+
+        }
+
+
+
+
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAccounts()
@@ -69,7 +107,10 @@ namespace ControllPanel.Controllers
                 return StatusCode(500, "Internal Server Error Please Try Again Later! ");
             }
         }
+        
+        
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -97,6 +138,7 @@ namespace ControllPanel.Controllers
             }
 
         }
+
 
     }
 }
